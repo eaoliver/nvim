@@ -101,17 +101,8 @@ vim.g.have_nerd_font = true
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
--- Make line numbers default
-vim.opt.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
-
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
-
--- Don't show the mode, since it's already in the status line
-vim.opt.showmode = false
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
@@ -123,16 +114,6 @@ end)
 
 -- Enable break indent
 vim.opt.breakindent = true
-
--- Save undo history
-vim.opt.undofile = true
-
--- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-
--- Keep signcolumn on by default
-vim.opt.signcolumn = 'yes'
 
 -- Decrease update time
 vim.opt.updatetime = 250
@@ -159,24 +140,48 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 0
 
+--
 -- Settings from my init.vim file
+--
+
+-- backup, swap and undo
+vim.opt.backup = false
+vim.opt.swapfile = false
+vim.opt.writebackup = false
+vim.opt.undofile = true
+vim.opt.autoread = true
+
+-- indent
 vim.opt.smarttab = true
+vim.opt.smartindent = true
+vim.opt.expandtab = true -- converts tabs to white space
+vim.opt.shiftwidth = 4 -- width for autoindents
+vim.opt.tabstop = 4 -- number of columns occupied by a tab
+vim.opt.autoindent = true -- indent a new line the same amount as the line just typed
+vim.opt.softtabstop = 2 -- see multiple spaces as tabstops so <BS> does the right thing
+
+-- search
+vim.opt.hlsearch = true
+vim.opt.ignorecase = true
+vim.opt.incsearch = true
+vim.opt.wrapscan = true
+vim.opt.smartcase = true -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
+
+-- sign column
+vim.opt.number = true
+vim.opt.relativenumber = false
+vim.opt.numberwidth = 4
+vim.opt.signcolumn = 'yes'
+
+-- status and tab bar
+vim.opt.laststatus = 3
+vim.opt.showmode = false
+-- vim.opt.showtabline = 0
+
 -- get bash-like tab completions
 vim.opt.wildmode = 'longest,list,full'
 -- show matching
 vim.opt.showmatch = true
--- incremental search
-vim.opt.incsearch = true
--- number of columns occupied by a tab
-vim.opt.tabstop = 2
--- see multiple spaces as tabstops so <BS> does the right thing
-vim.opt.softtabstop = 2
--- converts tabs to white space
-vim.opt.expandtab = true
--- width for autoindents
-vim.opt.shiftwidth = 2
--- indent a new line the same amount as the line just typed
-vim.opt.autoindent = true
 -- set an 80 column border for good coding style
 vim.opt.colorcolumn = '80'
 -- Se the text width to 80 characters.

@@ -227,7 +227,7 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 -- My keybindings to move around
 vim.keymap.set('n', ',', '<C-w><S-w>', { desc = 'Move focus to leftward window' })
-vim.keymap.set('n', '.', '<C-w><C-w>', { desc = 'Move focus to rightward window' })
+vim.keymap.set('n', '.', '<C-w><C-w>', { noremap = true, desc = 'Move focus to rightward window' })
 
 -- I like being able to toggle highlighting
 vim.keymap.set('n', ';h', ':set hls! <CR>', { desc = 'Toggle [h]ighlighting' })
@@ -1067,11 +1067,15 @@ require('lazy').setup({
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
+
   -- Auto generate pairs of brackets when entering an opening bracket
   require 'kickstart.plugins.autopairs',
+
   -- File tree
   require 'kickstart.plugins.neo-tree',
-  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+
+  -- adds gitsigns recommend keymaps
+  require 'kickstart.plugins.gitsigns',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
@@ -1107,6 +1111,49 @@ require('lazy').setup({
 
 -- Set the colour scheme
 vim.cmd.colorscheme 'torte'
+
+if vim.g.neovide then
+  -- Put anything you want to happen only in Neovide here
+  vim.o.guifont = 'Inconsolata:h14'
+  vim.g.neovide_opacity = 1
+  vim.g.neovide_normal_opacity = 1
+  vim.g.neovide_window_blurred = true
+
+  -- antialiasing
+  vim.g.neovide_cursor_antialiasing = true
+
+  -- animations
+  vim.g.neovide_position_animation_length = 0.15
+  vim.g.neovide_scroll_animation_length = 0.3
+
+  -- hide the mouse when typing
+  vim.g.neovide_hide_mouse_when_typing = true
+  vim.g.neovide_theme = 'auto' -- dark | light | auto
+
+  -- scrolling
+  vim.g.neovide_scroll_animation_length = 0.3
+  vim.g.neovide_scroll_animation_far_lines = 1
+
+  -- cursor particles
+  vim.g.neovide_cursor_vfx_mode = 'railgun'
+end
+
+--
+-- Setup cut and paste support in neovide and neovim
+--
+if vim.g.neovide then
+  vim.keymap.set('n', '<D-s>', ':w<CR>') -- Save
+  vim.keymap.set('v', '<D-c>', '"+y') -- Copy
+  vim.keymap.set('n', '<D-v>', '"+P') -- Paste normal mode
+  vim.keymap.set('v', '<D-v>', '"+P') -- Paste visual mode
+  vim.keymap.set('c', '<D-v>', '<C-R>+') -- Paste command mode
+  vim.keymap.set('i', '<D-v>', '<ESC>l"+Pli') -- Paste insert mode
+end
+-- Allow clipboard copy paste in neovim
+vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

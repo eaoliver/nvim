@@ -108,7 +108,7 @@ return {
             highlight = 'NeoTreeModified',
           },
           name = {
-            trailing_slash = false,
+            trailing_slash = true,
             use_git_status_colors = true,
             highlight = 'NeoTreeFileName',
           },
@@ -211,6 +211,7 @@ return {
             --}
             ['m'] = 'move', -- takes text input for destination, also accepts the optional config.show_path option like "add".
             ['q'] = 'close_window',
+            ['<leader>e'] = 'close_window',
             ['R'] = 'refresh',
             ['?'] = 'show_help',
             ['<'] = 'prev_source',
@@ -256,7 +257,7 @@ return {
             },
           },
           follow_current_file = {
-            enabled = false, -- This will find and focus the file in the active buffer every time
+            enabled = true, -- This will find and focus the file in the active buffer every time
             --               -- the current file is changed while the tree is open.
             leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
           },
@@ -272,7 +273,8 @@ return {
             mappings = {
               ['<bs>'] = 'navigate_up',
               ['r'] = 'set_root',
-              ['.'] = '<C-w><C-w>',
+              -- ['.'] = '<Cmd>wincmd w<CR>',
+              ['.'] = 'wincmd w',
               ['H'] = 'toggle_hidden',
               ['?'] = 'fuzzy_finder',
               ['/'] = 'fuzzy_finder',
@@ -323,7 +325,7 @@ return {
               ['bd'] = 'buffer_delete',
               ['<bs>'] = 'navigate_up',
               ['r'] = 'set_root',
-              ['.'] = '<C-w><C-w>',
+              ['.'] = '<Cmd>wincmd w<CR>',
               ['o'] = {
                 'show_help',
                 nowait = false,
@@ -365,7 +367,14 @@ return {
         },
       }
 
-      vim.keymap.set('n', '<leader>e', '<Cmd>Neotree reveal<CR>')
+      vim.keymap.set('n', '<leader>e', '<Cmd>Neotree toggle<CR>')
+      -- vim.keymap.set('n', '<leader>e', function()
+      --   if vim.bo.filetype == 'neo-tree' then
+      --     vim.cmd 'wincmd p'
+      --   else
+      --     vim.cmd 'Neotree toggle'
+      --   end
+      -- end, { silent = true, noremap = true, desc = 'Toggle Neo-tree or switch back' })
     end,
   },
 }

@@ -809,6 +809,7 @@ require('lazy').setup({
           lsp_format_opt = 'fallback'
         end
         return {
+          async = false, -- true will ignore timeout
           timeout_ms = 2500, -- Increased from 500ms
           lsp_format = lsp_format_opt,
         }

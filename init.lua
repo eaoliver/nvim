@@ -1102,7 +1102,7 @@ require('lazy').setup({
 vim.cmd.colorscheme 'carbonfox'
 
 if vim.g.neovide then
-  -- Debugging
+  -- Performance debugging tool
   vim.g.neovide_profiler = false
 
   -- toggle fullscreen within neovide

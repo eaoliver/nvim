@@ -45,7 +45,8 @@ return {
         options = {},
         palettes = {
           carbonfox = {
-            bg1 = '#000000',
+            bg1 = '#000000', -- pure black to match bg0
+            comment = '#d6d3d1', -- tailwind stone-300
           },
         },
       }

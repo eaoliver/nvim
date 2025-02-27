@@ -6,6 +6,10 @@ return {
     config = function()
       local lint = require 'lint'
       lint.linters_by_ft = {
+        javascript = { 'eslint_d' },
+        javascriptreact = { 'eslint_d' },
+        typecript = { 'eslint_d' },
+        typecriptreact = { 'eslint_d' },
         markdown = { 'markdownlint' },
       }
 

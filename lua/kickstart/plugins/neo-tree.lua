@@ -325,7 +325,7 @@ return {
               ['bd'] = 'buffer_delete',
               ['<bs>'] = 'navigate_up',
               ['r'] = 'set_root',
-              ['.'] = '<Cmd>wincmd w<CR>',
+              -- ['.'] = '<Cmd>wincmd w<CR>',
               ['o'] = {
                 'show_help',
                 nowait = false,

@@ -237,6 +237,12 @@ vim.keymap.set('n', ';d', function()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { desc = 'Toggle [d]iagnostics' })
 
+-- I don't like how neovim added character and line deletions into the register.
+-- This causes and standard copy and paste register to be overwritten, which
+-- is annoying.
+vim.keymap.set({ 'n', 'v' }, 'x', '"_x')
+vim.keymap.set({ 'n', 'v' }, 'd', '"_d')
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -1113,6 +1119,14 @@ require('lazy').setup({
 vim.cmd.colorscheme 'torte'
 
 if vim.g.neovide then
+  -- Debugging
+  vim.g.neovide_profiler = false
+
+  -- toggle fullscreen within neovide
+  vim.keymap.set('n', ';f', function()
+    vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen
+  end, { desc = 'Toggle [f]ullscreen' })
+
   -- Put anything you want to happen only in Neovide here
   vim.o.guifont = 'Inconsolata:h14'
   vim.g.neovide_opacity = 1
@@ -1124,7 +1138,7 @@ if vim.g.neovide then
 
   -- animations
   vim.g.neovide_position_animation_length = 0.15
-  vim.g.neovide_scroll_animation_length = 0.3
+  vim.g.neovide_scroll_animation_length = 0.250
 
   -- hide the mouse when typing
   vim.g.neovide_hide_mouse_when_typing = true
@@ -1136,6 +1150,15 @@ if vim.g.neovide then
 
   -- cursor particles
   vim.g.neovide_cursor_vfx_mode = 'railgun'
+
+  -- Animations can be disabled as follows
+  -- vim.g.neovide_position_animation_length = 0
+  -- vim.g.neovide_cursor_animation_length = 0.00
+  -- vim.g.neovide_cursor_trail_size = 0
+  -- vim.g.neovide_cursor_animate_in_insert_mode = false
+  -- vim.g.neovide_cursor_animate_command_line = false
+  -- vim.g.neovide_scroll_animation_far_lines = 0
+  -- vim.g.neovide_scroll_animation_length = 0.00
 end
 
 --

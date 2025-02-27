@@ -20,5 +20,35 @@ return {
       -- vim.cmd.colorscheme 'tokyonight-night'
     end,
   },
-  { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
+  {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    opts = {
+      term_colors = true,
+      transparent_background = false,
+      color_overrides = {
+        mocha = {
+          base = '#000000',
+          mantle = '#000000',
+          crust = '#000000',
+        },
+      },
+    },
+    priority = 1000,
+  },
+  {
+    'EdenEast/nightfox.nvim',
+    name = 'nightfox',
+    priority = 1000,
+    config = function()
+      require('nightfox').setup {
+        options = {},
+        palettes = {
+          carbonfox = {
+            bg1 = '#000000',
+          },
+        },
+      }
+    end,
+  },
 }

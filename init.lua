@@ -1097,8 +1097,9 @@ require('lazy').setup({
 })
 
 -- Set the colour scheme
--- vim.cmd.colorscheme 'torte'
-vim.cmd.colorscheme 'lunaperche'
+-- vim.cmd.colorscheme 'torte' -- previous mvim theme
+-- vim.cmd.colorscheme 'catppuccin-mocha'
+vim.cmd.colorscheme 'carbonfox'
 
 if vim.g.neovide then
   -- Debugging

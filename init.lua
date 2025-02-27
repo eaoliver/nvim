@@ -758,6 +758,9 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        -- 'cssls',
+        -- 'html',
+        'tailwindcss',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -789,7 +792,7 @@ require('lazy').setup({
           require('conform').format { async = true, lsp_format = 'fallback' }
         end,
         mode = '',
-        desc = '[F]ormat buffer',
+        desc = '[f]ormat buffer',
       },
     },
     opts = {
@@ -806,7 +809,7 @@ require('lazy').setup({
           lsp_format_opt = 'fallback'
         end
         return {
-          timeout_ms = 500,
+          timeout_ms = 2500, -- Increased from 500ms
           lsp_format = lsp_format_opt,
         }
       end,
@@ -816,24 +819,18 @@ require('lazy').setup({
         -- python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = {
-        -- 	"prettierd",
-        -- 	"prettier",
-        -- 	stop_after_first = true,
-        -- 	--append_args = { "--no-bracket-spacing" },
-        -- },
-        -- typescript = {
-        -- 	"prettierd",
-        -- 	"prettier",
-        -- 	stop_after_first = true,
-        -- 	--append_args = { "--no-bracket-spacing" },
-        -- },
-        -- typescriptreact = {
-        -- 	"prettierd",
-        -- 	"prettier",
-        -- 	stop_after_first = true,
-        -- 	--append_args = { "--no-bracket-spacing" },
-        -- },
+        css = { 'prettier' },
+        graphql = { 'prettier' },
+        html = { 'prettier' },
+        javascript = { 'prettier' },
+        javascriptreact = { 'prettier' },
+        json = { 'prettier' },
+        -- typescript = { 'prettier', append_args = { '--no-bracket-spacing' } },
+        -- typescriptreact = { 'prettier', append_args = { '--no-bracket-spacing' } },
+        markdown = { 'prettier' },
+        typescript = { 'prettier' },
+        typescriptreact = { 'prettier' },
+        yaml = { 'prettier' },
       },
     },
   },
@@ -1056,7 +1053,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.lint',
 
   -- Auto generate pairs of brackets when entering an opening bracket
-  require 'kickstart.plugins.autopairs',
+  -- require 'kickstart.plugins.autopairs',
 
   -- File tree
   require 'kickstart.plugins.neo-tree',
@@ -1143,7 +1140,6 @@ if vim.g.neovide then
   -- vim.g.neovide_scroll_animation_far_lines = 0
   -- vim.g.neovide_scroll_animation_length = 0.00
 end
-
 --
 -- Setup cut and paste support in neovide and neovim
 --
@@ -1152,8 +1148,12 @@ if vim.g.neovide then
   vim.keymap.set('v', '<D-c>', '"+y') -- Copy
   vim.keymap.set('n', '<D-v>', '"+P') -- Paste normal mode
   vim.keymap.set('v', '<D-v>', '"+P') -- Paste visual mode
-  vim.keymap.set('c', '<D-v>', '<C-R>+') -- Paste command mode
+  vim.keymap.set('c', '<D-v>', '<C-r>+') -- Paste command mode
   vim.keymap.set('i', '<D-v>', '<ESC>l"+Pli') -- Paste insert mode
+  -- MacOS specific paste funciton
+  -- vim.keymap.set({ 'n', 'v', 's', 'x', 'o', 'i', 'l', 'c', 't' }, '<D-v>', function()
+  --   vim.api.nvim_paste(vim.fn.getreg '+', true, -1)
+  -- end, { noremap = true, silent = true })
 end
 -- Allow clipboard copy paste in neovim
 vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true })

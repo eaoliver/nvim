@@ -54,6 +54,7 @@ return {
             -- PmenuSel = { bg = '#ff0000', fg = '#000000' },
             -- SnippetTabstop = { bg = '#ff0000', fg = '#000000' },
             -- WildMenu = { bg = '#ff0000', fg = '#000000' },
+            WinSeparator = { bg = '#292524' }, -- tailwind stone-800
             LspReferenceText = { bg = '#57534e' }, -- tailwind stone-600
             LspReferenceRead = { bg = '#57534e' }, -- tailwind stone-600
             LspReferenceWrite = { bg = '#57534e' },

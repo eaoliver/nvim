@@ -148,7 +148,7 @@ vim.opt.scrolloff = 0
 vim.opt.backup = false
 vim.opt.swapfile = false
 vim.opt.writebackup = false
-vim.opt.undofile = true
+vim.opt.undofile = false
 vim.opt.autoread = true
 
 -- indent
@@ -941,6 +941,8 @@ require('lazy').setup({
       local statusline = require 'mini.statusline'
       -- set use_icons to true if you have a Nerd Font
       statusline.setup { use_icons = vim.g.have_nerd_font }
+
+      require('mini.tabline').setup { show_icons = true, format = nil, set_vim_settings = false, tabpage_section = 'left' }
 
       -- You can configure sections in the statusline by overriding their
       -- default behavior. For example, here we set the section for

@@ -245,6 +245,9 @@ vim.keymap.set({ 'n', 'v' }, 'd', '"_d')
 -- I prefer to use U for redo
 vim.keymap.set('n', 'U', '<C-r>', { noremap = true, desc = 'Redo' })
 
+-- Select all binding
+vim.keymap.set('n', '<D-a>', 'ggvG', { noremap = true, desc = 'Select all' })
+
 -- Move current line up/down in normal mode
 vim.keymap.set('n', '<A-j>', ':m .+1<CR>==', { noremap = true, silent = true })
 vim.keymap.set('n', '<A-k>', ':m .-2<CR>==', { noremap = true, silent = true })

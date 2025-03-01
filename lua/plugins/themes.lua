@@ -49,6 +49,16 @@ return {
             comment = '#d6d3d1', -- tailwind stone-300
           },
         },
+        groups = {
+          carbonfox = {
+            -- PmenuSel = { bg = '#ff0000', fg = '#000000' },
+            -- SnippetTabstop = { bg = '#ff0000', fg = '#000000' },
+            -- WildMenu = { bg = '#ff0000', fg = '#000000' },
+            LspReferenceText = { bg = '#57534e' }, -- tailwind stone-600
+            LspReferenceRead = { bg = '#57534e' }, -- tailwind stone-600
+            LspReferenceWrite = { bg = '#57534e' },
+          },
+        },
       }
     end,
   },

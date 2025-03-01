@@ -1052,6 +1052,7 @@ require('lazy').setup({
 -- Set the colour scheme
 -- vim.cmd.colorscheme 'torte' -- previous mvim theme
 -- vim.cmd.colorscheme 'catppuccin-mocha'
+-- vim.cmd.colorscheme 'tokyonight-night'
 vim.cmd.colorscheme 'carbonfox'
 vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'none' })
 

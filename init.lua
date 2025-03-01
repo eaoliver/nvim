@@ -187,8 +187,7 @@ vim.opt.colorcolumn = '80'
 -- Se the text width to 80 characters.
 vim.opt.textwidth = 80
 vim.opt.wrap = true
--- using system clipboard filetype plugin on
-vim.opt.clipboard = 'unnamedplus'
+
 -- ignore some files for filename completion
 vim.opt.wildignore = '*.o,*.r,*.so,*.sl,*.tar,*.tgz'
 
@@ -242,6 +241,14 @@ end, { desc = 'Toggle [d]iagnostics' })
 -- is annoying.
 vim.keymap.set({ 'n', 'v' }, 'x', '"_x')
 vim.keymap.set({ 'n', 'v' }, 'd', '"_d')
+
+-- Move current line up/down in normal mode
+vim.keymap.set('n', '<A-j>', ':m .+1<CR>==', { noremap = true, silent = true })
+vim.keymap.set('n', '<A-k>', ':m .-2<CR>==', { noremap = true, silent = true })
+
+-- Move selected lines up/down in visual mode
+vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
+vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -1051,7 +1058,7 @@ require('lazy').setup({
   --
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
-  -- require 'kickstart.plugins.lint',
+  require 'kickstart.plugins.lint',
 
   -- Auto generate pairs of brackets when entering an opening bracket
   -- require 'kickstart.plugins.autopairs',
@@ -1061,6 +1068,9 @@ require('lazy').setup({
 
   -- adds gitsigns recommend keymaps
   require 'kickstart.plugins.gitsigns',
+
+  -- pull in the tailwind configs
+  require 'plugins.tailwind',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
@@ -1141,6 +1151,7 @@ if vim.g.neovide then
   -- vim.g.neovide_scroll_animation_far_lines = 0
   -- vim.g.neovide_scroll_animation_length = 0.00
 end
+
 --
 -- Setup cut and paste support in neovide and neovim
 --
@@ -1149,18 +1160,21 @@ if vim.g.neovide then
   vim.keymap.set('v', '<D-c>', '"+y') -- Copy
   vim.keymap.set('n', '<D-v>', '"+P') -- Paste normal mode
   vim.keymap.set('v', '<D-v>', '"+P') -- Paste visual mode
-  vim.keymap.set('c', '<D-v>', '<C-r>+') -- Paste command mode
+  vim.keymap.set('c', '<D-v>', '<C-R>+') -- Paste command mode
   vim.keymap.set('i', '<D-v>', '<ESC>l"+Pli') -- Paste insert mode
   -- MacOS specific paste funciton
   -- vim.keymap.set({ 'n', 'v', 's', 'x', 'o', 'i', 'l', 'c', 't' }, '<D-v>', function()
   --   vim.api.nvim_paste(vim.fn.getreg '+', true, -1)
   -- end, { noremap = true, silent = true })
 end
+
 -- Allow clipboard copy paste in neovim
-vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('', '<D-v>', '"+p', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+
+require 'plugins.syntax'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

@@ -1025,6 +1025,9 @@ if vim.g.neovide then
   -- Performance debugging tool
   vim.g.neovide_profiler = false
 
+  -- Mac keyboards don't have an alt key, so we use the command key.
+  vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
+
   -- toggle fullscreen within neovide
   vim.keymap.set('n', ';f', function()
     vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen

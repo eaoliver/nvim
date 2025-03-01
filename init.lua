@@ -174,7 +174,8 @@ vim.opt.numberwidth = 4
 vim.opt.signcolumn = 'yes'
 
 -- status and tab bar
-vim.opt.laststatus = 3
+vim.opt.laststatus = 2
+-- vim.opt.laststatus = 3 -- only show a single status line
 vim.opt.showmode = false
 -- vim.opt.showtabline = 0
 
@@ -1052,6 +1053,7 @@ require('lazy').setup({
 -- vim.cmd.colorscheme 'torte' -- previous mvim theme
 -- vim.cmd.colorscheme 'catppuccin-mocha'
 vim.cmd.colorscheme 'carbonfox'
+vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'none' })
 
 if vim.g.neovide then
   -- Performance debugging tool
@@ -1070,7 +1072,7 @@ if vim.g.neovide then
 
   -- cursor
   vim.g.neovide_cursor_antialiasing = true
-  vim.g.neovide_cursor_animation_length = 0.10
+  vim.g.neovide_cursor_animation_length = 0.05
   vim.g.neovide_cursor_animate_in_insert_mode = true
   vim.g.neovide_cursor_animate_command_line = true
 
@@ -1093,8 +1095,6 @@ if vim.g.neovide then
   -- vim.g.neovide_position_animation_length = 0
   -- vim.g.neovide_cursor_animation_length = 0.00
   -- vim.g.neovide_cursor_trail_size = 0
-  -- vim.g.neovide_cursor_animate_in_insert_mode = false
-  -- vim.g.neovide_cursor_animate_command_line = false
   -- vim.g.neovide_scroll_animation_far_lines = 0
   -- vim.g.neovide_scroll_animation_length = 0.00
 end

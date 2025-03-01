@@ -36,13 +36,13 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- My keybindings to move around
-vim.keymap.set('n', ',', '<C-w><S-w>', { desc = 'Move focus to leftward window' })
+vim.keymap.set('n', ',', '<C-w><S-w>', { noremap = true, desc = 'Move focus to leftward window' })
 vim.keymap.set('n', '.', '<C-w><C-w>', { noremap = true, desc = 'Move focus to rightward window' })
 
 -- I like being able to toggle highlighting
 vim.keymap.set('n', ';h', ':set hls! <CR>', { desc = 'Toggle [h]ighlighting' })
 
--- vim.keymap.set('n', ';d', ':lua vim.diagnostic.enable(not vim.diagnostic.is_enabled()) <CR>', { desc = 'Toggle [d]iagnostics' })
+-- vim.keymap.set('n', ';d', ':lua vim.diagnostic.enable(not vim.diagnostic.is_enabled()) <CR>', { noremap = true, desc = 'Toggle [d]iagnostics' })
 vim.keymap.set('n', ';d', function()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { desc = 'Toggle [d]iagnostics' })
@@ -56,8 +56,18 @@ vim.keymap.set({ 'n', 'v' }, 'd', '"_d')
 -- I prefer to use U for redo
 vim.keymap.set('n', 'U', '<C-r>', { noremap = true, desc = 'Redo' })
 
--- Select all binding
-vim.keymap.set('n', '<D-a>', 'ggVG', { noremap = true, desc = 'Select all' })
+-- Tabs
+-- vim.keymap.set({ 'i', 'n' }, '<D-w>', function()
+--   confirm_close_tab()
+-- end) -- close tab
+-- vim.keymap.set({ 'i', 'n' }, '<D-[>', function()
+--   vim.cmd 'BufferPrevious'
+-- end) -- previous tab
+-- vim.keymap.set({ 'i', 'n' }, '<D-]>', function()
+--   vim.cmd 'BufferNext'
+-- end) -- next tab
+-- vim.keymap.set('i', '<D-t>', '<C-o>:tabnew<CR><Esc>') -- new tab (insert)
+-- vim.keymap.set('n', '<D-t>', ':tabnew<CR>') -- new tab (insert)
 
 -- Move current line up/down in normal mode
 vim.keymap.set('n', '<A-j>', ':m .+1<CR>==', { noremap = true, silent = true })
@@ -71,12 +81,20 @@ vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { noremap = true, silent = true
 -- Setup cut and paste support in neovide and neovim
 --
 if vim.g.neovide then
+  -- Select all binding
+  vim.keymap.set('n', '<D-a>', 'ggVG', { noremap = true, desc = 'Select all' })
+  vim.keymap.set('i', '<D-a>', '<Esc>ggVG', { noremap = true, desc = 'Select all' })
+
   vim.keymap.set('n', '<D-s>', ':w<CR>') -- Save
+  vim.keymap.set('i', '<D-s>', '<C-o>:w<CR>') -- Save
+
+  vim.keymap.set('x', '<D-x>', '"+dm0i<Esc>`0') -- cut (include insert hack to fix whichkey issue #518)
   vim.keymap.set('v', '<D-c>', '"+y') -- Copy
-  vim.keymap.set('n', '<D-v>', '"+P') -- Paste normal mode
-  vim.keymap.set('v', '<D-v>', '"+P') -- Paste visual mode
-  vim.keymap.set('c', '<D-v>', '<C-R>+') -- Paste command mode
+  vim.keymap.set('n', '<D-v>', '"+p') -- Paste normal mode
   vim.keymap.set('i', '<D-v>', '<ESC>l"+Pli') -- Paste insert mode
+  -- vim.keymap.set('i', '<D-v>', '<C-r><C-o>+') -- Also appears to work
+  vim.keymap.set('v', '<D-v>', '"+p') -- Paste visual mode
+  vim.keymap.set('c', '<D-v>', '<C-R>+', { silent = false }) -- Paste command mode
   -- MacOS specific paste funciton
   -- vim.keymap.set({ 'n', 'v', 's', 'x', 'o', 'i', 'l', 'c', 't' }, '<D-v>', function()
   --   vim.api.nvim_paste(vim.fn.getreg '+', true, -1)
@@ -86,5 +104,7 @@ end
 -- Allow clipboard copy paste in neovim
 vim.api.nvim_set_keymap('', '<D-v>', '"+p', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+-- vim.keymap.set('t', '<D-v>', '<C-\\><C-n>"+Pi') -- Paste terminal mode
+vim.keymap.set('t', '<D-v>', [[<C-\><C-N>"+P]]) -- from https://github.com/neovide/neovide/pull/2101
 vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true })

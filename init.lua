@@ -1068,8 +1068,11 @@ if vim.g.neovide then
   vim.g.neovide_normal_opacity = 1
   vim.g.neovide_window_blurred = false
 
-  -- antialiasing
+  -- cursor
   vim.g.neovide_cursor_antialiasing = true
+  vim.g.neovide_cursor_animation_length = 0.10
+  vim.g.neovide_cursor_animate_in_insert_mode = true
+  vim.g.neovide_cursor_animate_command_line = true
 
   -- animations
   vim.g.neovide_position_animation_length = 0.15

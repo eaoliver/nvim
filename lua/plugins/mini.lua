@@ -9,8 +9,7 @@ return { -- Collection of various small independent plugins/modules
     --  - ci'  - [C]hange [I]nside [']quote
     require('mini.ai').setup { n_lines = 500 }
 
-    -- Not sure if this does anything.
-    -- require('mini.icons').setup()
+    require('mini.icons').setup()
 
     -- Move blocks of text in every direction.
     require('mini.move').setup()

@@ -1012,16 +1012,16 @@ require('lazy').setup({
   --
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
-  require 'kickstart.plugins.lint',
+  require 'plugins.lint',
 
   -- Auto generate pairs of brackets when entering an opening bracket
-  -- require 'kickstart.plugins.autopairs',
+  -- require 'plugins.autopairs',
 
   -- File tree
-  require 'kickstart.plugins.neo-tree',
+  require 'plugins.neo-tree',
 
   -- adds gitsigns recommend keymaps
-  require 'kickstart.plugins.gitsigns',
+  require 'plugins.gitsigns',
 
   -- pull in the tailwind configs
   require 'plugins.tailwind',

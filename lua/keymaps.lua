@@ -83,8 +83,8 @@ if vim.g.neovide then
   vim.keymap.set('x', '<D-x>', '"+dm0i<Esc>`0') -- cut (include insert hack to fix whichkey issue #518)
   vim.keymap.set('v', '<D-c>', '"+y') -- Copy
   vim.keymap.set('n', '<D-v>', '"+p') -- Paste normal mode
-  vim.keymap.set('i', '<D-v>', '<ESC>l"+Pli') -- Paste insert mode
-  -- vim.keymap.set('i', '<D-v>', '<C-r><C-o>+') -- Also appears to work
+  -- vim.keymap.set('i', '<D-v>', '<ESC>l"+Pli') -- Paste insert mode
+  -- vim.keymap.set('i', '<D-v>', '<C-r><C-o>+', { noremap = true }) -- Also appears to work
   vim.keymap.set('v', '<D-v>', '"+p') -- Paste visual mode
   vim.keymap.set('c', '<D-v>', '<C-R>+', { silent = false }) -- Paste command mode
   -- MacOS specific paste funciton
@@ -94,9 +94,18 @@ if vim.g.neovide then
 end
 
 -- Allow clipboard copy paste in neovim
-vim.api.nvim_set_keymap('', '<D-v>', '"+p', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('', '<D-v>', '"+p', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true })
 -- vim.keymap.set('t', '<D-v>', '<C-\\><C-n>"+Pi') -- Paste terminal mode
 vim.keymap.set('t', '<D-v>', [[<C-\><C-N>"+P]]) -- from https://github.com/neovide/neovide/pull/2101
 vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('i', '<D-v>', '<cmd>lua PasteWithoutFormatOptions()<CR>', { noremap = true, silent = true })
+
+function PasteWithoutFormatOptions()
+  local fo = vim.o.formatoptions
+  vim.o.formatoptions = fo:gsub('[ro]', '') -- Remove 'r' and 'o' from formatoptions
+  vim.cmd 'normal! "*p' -- Paste from the system clipboard in visual mode
+  vim.o.formatoptions = fo -- Restore formatoptions
+end

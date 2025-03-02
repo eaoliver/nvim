@@ -1015,7 +1015,7 @@ require('lazy').setup({
   require 'plugins.lint',
 
   -- Auto generate pairs of brackets when entering an opening bracket
-  -- require 'plugins.autopairs',
+  require 'plugins.autopairs',
 
   -- File tree
   require 'plugins.neo-tree',

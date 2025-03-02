@@ -69,13 +69,6 @@ vim.keymap.set('n', 'U', '<C-r>', { noremap = true, desc = 'Redo' })
 -- vim.keymap.set('i', '<D-t>', '<C-o>:tabnew<CR><Esc>') -- new tab (insert)
 -- vim.keymap.set('n', '<D-t>', ':tabnew<CR>') -- new tab (insert)
 
--- Move current line up/down in normal mode and visual mode
--- These are now handled by mini.nvim/mini.move
--- vim.keymap.set('n', '<M-j>', ':m .+1<CR>==', { noremap = true, silent = true })
--- vim.keymap.set('n', '<M-k>', ':m .-2<CR>==', { noremap = true, silent = true })
--- vim.keymap.set('v', '<M-j>', ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
--- vim.keymap.set('v', '<M-k>', ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
-
 --
 -- Setup cut and paste support in neovide and neovim
 --

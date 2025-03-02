@@ -53,15 +53,39 @@ vim.keymap.set('n', 'U', '<C-r>', { noremap = true, desc = 'Redo' })
 -- Tabs
 vim.keymap.set('n', '<D-t>', ':tabnew<CR>') -- new tab (insert)
 vim.keymap.set('i', '<D-t>', '<C-o>:tabnew<CR><Esc>') -- new tab (insert)
--- vim.keymap.set({ 'i', 'n' }, '<D-w>', function()
---   confirm_close_tab()
--- end) -- close tab
 -- vim.keymap.set({ 'i', 'n' }, '<D-[>', function()
 --   vim.cmd 'BufferPrevious'
 -- end) -- previous tab
 -- vim.keymap.set({ 'i', 'n' }, '<D-]>', function()
 --   vim.cmd 'BufferNext'
 -- end) -- next tab
+vim.keymap.set('n', '<D-w>', function()
+  local tabpages = vim.api.nvim_list_tabpages()
+
+  if #tabpages > 1 then
+    -- If more than one tab is open, close the current tab
+    vim.cmd 'tabclose'
+  else
+    -- If this is the last tab, just close the buffer
+    vim.cmd 'bdelete'
+    return
+  end
+
+  -- Check if the buffer is still in use in another tab
+  local bufnr = vim.api.nvim_get_current_buf()
+  for _, tab in ipairs(tabpages) do
+    local windows = vim.api.nvim_tabpage_list_wins(tab)
+    for _, win in ipairs(windows) do
+      if vim.api.nvim_win_get_buf(win) == bufnr then
+        return -- Buffer is still used, do not delete it
+      end
+    end
+  end
+  -- If the buffer is not used in any other tab, delete it
+  if vim.api.nvim_buf_is_valid(bufnr) then
+    vim.cmd('bdelete ' .. bufnr)
+  end
+end, { noremap = true, silent = true })
 
 --
 -- Setup cut and paste support in neovide and neovim

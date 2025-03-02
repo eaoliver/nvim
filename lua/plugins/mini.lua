@@ -9,6 +9,7 @@ return { -- Collection of various small independent plugins/modules
     --  - ci'  - [C]hange [I]nside [']quote
     require('mini.ai').setup { n_lines = 500 }
 
+    -- Move blocks of text in every direction.
     require('mini.move').setup()
 
     -- Add/delete/replace surroundings (brackets, quotes, etc.)

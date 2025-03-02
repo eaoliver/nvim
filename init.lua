@@ -178,6 +178,7 @@ vim.opt.laststatus = 2
 -- vim.opt.laststatus = 3 -- only show a single status line
 vim.opt.showmode = false
 vim.opt.showtabline = 1 -- show tabline if there is more than 1 tab
+vim.opt.termguicolors = true
 
 -- get bash-like tab completions
 vim.opt.wildmode = 'longest,list,full'
@@ -233,6 +234,7 @@ vim.opt.rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
+
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
@@ -917,9 +919,14 @@ require('lazy').setup({
     opts = { signs = false },
   },
 
+  -- Lots of useful little utilizes
   require 'plugins.mini',
 
-  { -- Highlight, edit, and navigate code
+  -- Bufferline management
+  require 'plugins.bufferline',
+
+  -- Highlight, edit, and navigate code
+  {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
@@ -1048,14 +1055,11 @@ if vim.g.neovide then
   -- animations
   vim.g.neovide_position_animation_length = 0.15
   vim.g.neovide_scroll_animation_length = 0.250
+  vim.g.neovide_scroll_animation_far_lines = 1
 
   -- hide the mouse when typing
   vim.g.neovide_hide_mouse_when_typing = true
   vim.g.neovide_theme = 'dark' -- dark | light | auto
-
-  -- scrolling
-  vim.g.neovide_scroll_animation_length = 0.3
-  vim.g.neovide_scroll_animation_far_lines = 1
 
   -- cursor particles
   vim.g.neovide_cursor_vfx_mode = 'railgun'
@@ -1067,8 +1071,6 @@ if vim.g.neovide then
   -- vim.g.neovide_scroll_animation_far_lines = 0
   -- vim.g.neovide_scroll_animation_length = 0.00
 end
-
-require 'plugins.syntax'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

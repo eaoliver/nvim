@@ -56,6 +56,7 @@ vim.keymap.set('i', '<D-t>', '<C-o>:tabnew<CR><Esc>') -- new tab (insert)
 vim.keymap.set({ 'i', 'n' }, '<D-{>', ':tabprevious<CR>', { noremap = true, silent = true, desc = 'Go to the previous tab' })
 vim.keymap.set({ 'i', 'n' }, '<D-}>', ':tabnext<CR>', { noremap = true, silent = true, desc = 'Go to next tab' })
 vim.keymap.set('n', '<D-w>', function()
+  local bufnr = vim.api.nvim_get_current_buf()
   local tabpages = vim.api.nvim_list_tabpages()
 
   if #tabpages > 1 then
@@ -69,8 +70,8 @@ vim.keymap.set('n', '<D-w>', function()
 
   -- reload the tab pages excluding the tab we closed.
   tabpages = vim.api.nvim_list_tabpages()
+
   -- Check if the buffer is still in use in another tab
-  local bufnr = vim.api.nvim_get_current_buf()
   for _, tab in ipairs(tabpages) do
     local windows = vim.api.nvim_tabpage_list_wins(tab)
     for _, win in ipairs(windows) do
@@ -128,3 +129,8 @@ function PasteWithoutFormatOptions()
   vim.cmd 'normal! "*p' -- Paste from the system clipboard in visual mode
   vim.o.formatoptions = fo -- Restore formatoptions
 end
+
+vim.keymap.set('n', '<leader>u', function()
+  local result = vim.treesitter.get_captures_at_cursor(0)
+  print(vim.inspect(result))
+end, { noremap = true, silent = false, desc = 'Show the treesitter capture group [u]nder the cursor.' })

@@ -399,14 +399,10 @@ require('lazy').setup({
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`
       require('telescope').setup {
-        -- You can put your default mappings / updates / etc. in here
-        --  All the info you're looking for is in `:help telescope.setup()`
-        --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
+        defaults = {
+          -- misc options
+          file_ignore_patterns = { '.next/, node_modules/', '.git/' },
+        },
         -- pickers = {}
         extensions = {
           ['ui-select'] = {
@@ -1004,6 +1000,8 @@ require('lazy').setup({
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
   -- place them in the correct locations.
+
+  require 'plugins.colorizer',
 
   -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
   --

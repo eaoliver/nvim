@@ -53,12 +53,8 @@ vim.keymap.set('n', 'U', '<C-r>', { noremap = true, desc = 'Redo' })
 -- Tabs
 vim.keymap.set('n', '<D-t>', ':tabnew<CR>') -- new tab (insert)
 vim.keymap.set('i', '<D-t>', '<C-o>:tabnew<CR><Esc>') -- new tab (insert)
--- vim.keymap.set({ 'i', 'n' }, '<D-[>', function()
---   vim.cmd 'BufferPrevious'
--- end) -- previous tab
--- vim.keymap.set({ 'i', 'n' }, '<D-]>', function()
---   vim.cmd 'BufferNext'
--- end) -- next tab
+vim.keymap.set({ 'i', 'n' }, '<D-{>', ':tabprevious<CR>', { noremap = true, silent = true, desc = 'Go to the previous tab' })
+vim.keymap.set({ 'i', 'n' }, '<D-}>', ':tabnext<CR>', { noremap = true, silent = true, desc = 'Go to next tab' })
 vim.keymap.set('n', '<D-w>', function()
   local tabpages = vim.api.nvim_list_tabpages()
 
@@ -67,10 +63,12 @@ vim.keymap.set('n', '<D-w>', function()
     vim.cmd 'tabclose'
   else
     -- If this is the last tab, just close the buffer
-    vim.cmd 'bdelete'
+    vim.cmd 'quit'
     return
   end
 
+  -- reload the tab pages excluding the tab we closed.
+  tabpages = vim.api.nvim_list_tabpages()
   -- Check if the buffer is still in use in another tab
   local bufnr = vim.api.nvim_get_current_buf()
   for _, tab in ipairs(tabpages) do

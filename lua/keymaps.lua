@@ -20,12 +20,6 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
--- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
-
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
 --
@@ -57,6 +51,8 @@ vim.keymap.set({ 'n', 'v' }, 'd', '"_d')
 vim.keymap.set('n', 'U', '<C-r>', { noremap = true, desc = 'Redo' })
 
 -- Tabs
+vim.keymap.set('n', '<D-t>', ':tabnew<CR>') -- new tab (insert)
+vim.keymap.set('i', '<D-t>', '<C-o>:tabnew<CR><Esc>') -- new tab (insert)
 -- vim.keymap.set({ 'i', 'n' }, '<D-w>', function()
 --   confirm_close_tab()
 -- end) -- close tab
@@ -66,19 +62,20 @@ vim.keymap.set('n', 'U', '<C-r>', { noremap = true, desc = 'Redo' })
 -- vim.keymap.set({ 'i', 'n' }, '<D-]>', function()
 --   vim.cmd 'BufferNext'
 -- end) -- next tab
--- vim.keymap.set('i', '<D-t>', '<C-o>:tabnew<CR><Esc>') -- new tab (insert)
--- vim.keymap.set('n', '<D-t>', ':tabnew<CR>') -- new tab (insert)
 
 --
 -- Setup cut and paste support in neovide and neovim
 --
 if vim.g.neovide then
+  -- open a new instance of neovide
+  vim.keymap.set('n', '<D-n>', ":silent exec '!neovide'<cr>", { desc = 'Open a new instance of neovide' })
+
   -- Select all binding
   vim.keymap.set('n', '<D-a>', 'ggVG', { noremap = true, desc = 'Select all' })
   vim.keymap.set('i', '<D-a>', '<Esc>ggVG', { noremap = true, desc = 'Select all' })
 
-  vim.keymap.set('n', '<D-s>', ':w<CR>') -- Save
-  vim.keymap.set('i', '<D-s>', '<C-o>:w<CR>') -- Save
+  vim.keymap.set('n', '<D-s>', ':w<CR>', { desc = 'Save the current buffer' }) -- Save
+  vim.keymap.set('i', '<D-s>', '<C-o>:w<CR>', { desc = 'Save the current buffer' }) -- Save
 
   vim.keymap.set('x', '<D-x>', '"+dm0i<Esc>`0') -- cut (include insert hack to fix whichkey issue #518)
   vim.keymap.set('v', '<D-c>', '"+y') -- Copy

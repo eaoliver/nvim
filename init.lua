@@ -177,7 +177,7 @@ vim.opt.signcolumn = 'yes'
 vim.opt.laststatus = 2
 -- vim.opt.laststatus = 3 -- only show a single status line
 vim.opt.showmode = false
--- vim.opt.showtabline = 0
+vim.opt.showtabline = 1 -- show tabline if there is more than 1 tab
 
 -- get bash-like tab completions
 vim.opt.wildmode = 'longest,list,full'

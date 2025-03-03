@@ -272,7 +272,7 @@ return {
           window = {
             mappings = {
               ['<bs>'] = 'navigate_up',
-              ['r'] = 'set_root',
+              ['R'] = 'set_root',
               -- ['.'] = '<Cmd>wincmd w<CR>',
               ['.'] = 'wincmd w',
               ['H'] = 'toggle_hidden',
@@ -324,7 +324,7 @@ return {
               ['d'] = 'buffer_delete',
               ['bd'] = 'buffer_delete',
               ['<bs>'] = 'navigate_up',
-              ['r'] = 'set_root',
+              ['R'] = 'set_root',
               -- ['.'] = '<Cmd>wincmd w<CR>',
               ['o'] = {
                 'show_help',

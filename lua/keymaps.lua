@@ -6,7 +6,7 @@
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [q]uickfix list' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -40,8 +40,9 @@ end, { desc = 'Toggle [d]iagnostics' })
 -- I don't like how neovim added character and line deletions into the register.
 -- This causes and standard copy and paste register to be overwritten, which
 -- is annoying.
-vim.keymap.set({ 'n', 'v' }, 'x', '"_x')
+vim.keymap.set({ 'n', 'v' }, 'c', '"_c')
 vim.keymap.set({ 'n', 'v' }, 'd', '"_d')
+vim.keymap.set({ 'n', 'v' }, 'x', '"_x')
 
 -- I prefer to use U for redo
 vim.keymap.set('n', 'U', '<C-r>', { noremap = true, desc = 'Redo' })
@@ -122,7 +123,9 @@ vim.api.nvim_set_keymap('i', '<D-v>', '<cmd>lua PasteWithoutFormatOptions()<CR>'
 function PasteWithoutFormatOptions()
   local fo = vim.o.formatoptions
   vim.o.formatoptions = fo:gsub('[ro]', '') -- Remove 'r' and 'o' from formatoptions
-  vim.cmd 'normal! "*p' -- Paste from the system clipboard in visual mode
+  --vim.cmd 'normal! "*p' -- Paste from the system clipboard in visual mode
+  local clipboard_content = vim.fn.getreg '*' -- Get clipboard content
+  vim.api.nvim_paste(clipboard_content, true, -1)
   vim.o.formatoptions = fo -- Restore formatoptions
 end
 

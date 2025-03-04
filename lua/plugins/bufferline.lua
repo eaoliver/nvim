@@ -12,7 +12,7 @@ return {
     for n = 1, 9 do
       map('n', 'g' .. n, function()
         bufferline.go_to(n, true)
-      end, { desc = '[Bufferline] Go to ' .. n .. 'th buffer' })
+      end, { desc = '[Bufferline] Go to ' .. n .. 'th tab' })
     end
 
     bufferline.setup {

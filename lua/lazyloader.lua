@@ -10,9 +10,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
--- Setup the Lazy package manager
-require 'lazy'
-
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
@@ -711,6 +708,15 @@ require('lazy').setup({
         },
         progress = {
           enabled = false,
+        },
+        signature = {
+          enabled = false,
+          auto_open = {
+            enabled = true,
+            trigger = true, -- Automatically show signature help when typing a trigger character from the LSP
+            luasnip = true, -- Will open signature help when jumping to Luasnip insert nodes
+            throttle = 50, -- Debounce lsp signature help request by 50ms
+          },
         },
       },
       -- you can enable a preset for easier configuration

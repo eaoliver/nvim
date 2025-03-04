@@ -5,10 +5,6 @@
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
--- Clear highlights on search when pressing <Esc> in normal mode
---  See `:help hlsearch`
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
@@ -134,3 +130,12 @@ vim.keymap.set('n', '<leader>u', function()
   local result = vim.treesitter.get_captures_at_cursor(0)
   print(vim.inspect(result))
 end, { noremap = true, silent = false, desc = 'Show the treesitter capture group [u]nder the cursor.' })
+
+-- Setup the vim profiler
+vim.api.nvim_set_keymap(
+  'n',
+  '<leader>ps',
+  ':profile start profiledata.txt<CR>:profile func *<CR>:profile file *<CR>',
+  { noremap = true, silent = true, desc = '[p]rofiler [s]tart' }
+)
+vim.api.nvim_set_keymap('n', '<leader>pe', ':profile stop<CR>', { noremap = true, silent = true, desc = '[p]rofiler [e]nd' })

@@ -611,6 +611,9 @@ require('lazy').setup({
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-nvim-lsp-signature-help',
+
+      -- auto complete from open buffers
+      'hrsh7th/cmp-buffer',
     },
     config = function()
       -- See `:help cmp`
@@ -688,6 +691,15 @@ require('lazy').setup({
           { name = 'luasnip' },
           { name = 'path' },
           { name = 'nvim_lsp_signature_help' },
+          {
+            -- auto complete from open buffers
+            name = 'buffer',
+            option = {
+              get_bufnrs = function()
+                return vim.api.nvim_list_bufs()
+              end,
+            },
+          },
         },
       }
     end,
@@ -718,6 +730,9 @@ require('lazy').setup({
             throttle = 50, -- Debounce lsp signature help request by 50ms
           },
         },
+      },
+      messages = {
+        view_search = false, -- 'virtualtext', -- view for search count messages. Set to `false` to disable
       },
       -- you can enable a preset for easier configuration
       presets = {

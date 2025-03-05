@@ -622,6 +622,14 @@ require('lazy').setup({
       luasnip.config.setup {}
 
       cmp.setup {
+        enabled = function()
+          -- Get the syntax group under the cursor
+          local context = require 'cmp.config.context'
+          if context.in_treesitter_capture 'comment' or context.in_syntax_group 'Comment' then
+            return false -- Disable completion inside comments
+          end
+          return true
+        end,
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body)

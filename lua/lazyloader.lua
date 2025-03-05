@@ -628,6 +628,13 @@ require('lazy').setup({
           if context.in_treesitter_capture 'comment' or context.in_syntax_group 'Comment' then
             return false -- Disable completion inside comments
           end
+
+          -- Disable in Telescope prompt buffers
+          local buftype = vim.api.nvim_get_option_value('buftype', { buf = 0 })
+          if buftype == 'prompt' then
+            return false
+          end
+
           return true
         end,
         snippet = {

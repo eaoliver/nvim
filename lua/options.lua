@@ -94,3 +94,34 @@ vim.opt.wrap = true
 
 -- ignore some files for filename completion
 vim.opt.wildignore = '*.o,*.r,*.so,*.sl,*.tar,*.tgz'
+
+--
+-- Set the default font and size
+--
+local default_font = 'Inconsolata'
+local default_size = 14
+local font_size = default_size
+
+-- Function to update font size
+local function set_font(size)
+  font_size = size
+  vim.opt.guifont = string.format('%s:h%d', default_font, font_size)
+end
+
+-- Increase font size
+vim.keymap.set('n', '<D-=>', function()
+  set_font(font_size + 1)
+end, { desc = 'Increase font size by 1 point' })
+
+-- Decrease font size
+vim.keymap.set('n', '<D-->', function()
+  set_font(font_size - 1)
+end, { desc = 'Decrease font size by 1 point' })
+
+-- Reset font size
+vim.keymap.set('n', '<D-0>', function()
+  set_font(default_size)
+end, { desc = 'Reset font size' })
+
+-- Set initial font
+set_font(default_size)

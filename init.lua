@@ -107,7 +107,6 @@ if vim.g.neovide then
   end, { desc = 'Toggle [f]ullscreen' })
 
   -- Put anything you want to happen only in Neovide here
-  vim.o.guifont = 'Inconsolata:h14'
   vim.g.neovide_opacity = 1
   vim.g.neovide_normal_opacity = 1
   vim.g.neovide_window_blurred = false

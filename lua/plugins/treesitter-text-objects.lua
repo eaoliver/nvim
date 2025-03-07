@@ -4,7 +4,6 @@ return {
   lazy = true,
   config = function()
     require('nvim-treesitter.configs').setup {
-      print 'hello world',
       textobjects = {
         select = {
           enable = true,

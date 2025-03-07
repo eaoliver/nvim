@@ -672,6 +672,8 @@ require('lazy').setup({
     opts = { signs = false },
   },
 
+  require 'plugins.lualine',
+
   -- Lots of useful little utilizes
   require 'plugins.mini',
 

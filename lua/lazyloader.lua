@@ -352,8 +352,8 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
-        -- gopls = {},
+        clangd = {},
+        gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -398,6 +398,8 @@ require('lazy').setup({
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
         'cssls',
+        'delve', -- go debugger
+        'gopls',
         'html',
         'tailwindcss',
       })
@@ -460,14 +462,15 @@ require('lazy').setup({
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         css = { 'prettier' },
+        go = { 'gofmt' },
         graphql = { 'prettier' },
         html = { 'prettier' },
         javascript = { 'prettier' },
         javascriptreact = { 'prettier' },
         json = { 'prettier' },
+        markdown = { 'prettier' },
         -- typescript = { 'prettier', append_args = { '--no-bracket-spacing' } },
         -- typescriptreact = { 'prettier', append_args = { '--no-bracket-spacing' } },
-        markdown = { 'prettier' },
         typescript = { 'prettier' },
         typescriptreact = { 'prettier' },
         yaml = { 'prettier' },

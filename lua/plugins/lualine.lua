@@ -77,7 +77,8 @@ local colors = {
     }
 
     local function dynamic_filename()
-      local path_mode = vim.api.nvim_win_get_width(0) > vim.o.columns / 2 and 1 or 0 -- 1 = Relative path, 0 = Filename only
+      -- local path_mode = vim.api.nvim_win_get_width(0) > vim.o.columns / 2 and 1 or 0 -- 1 = Relative path, 0 = Filename only
+      local path_mode = vim.api.nvim_win_get_width(0) > vim.o.columns / 3 and 1 or 0 -- 1 = Relative path, 0 = Filename only
       return vim.fn.fnamemodify(vim.fn.expand '%', path_mode == 1 and ':.' or ':t')
     end
 

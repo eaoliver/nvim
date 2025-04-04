@@ -41,7 +41,14 @@ return {
     -- C-k: Toggle signature help (if signature.enabled = true)
     --
     -- See :h blink-cmp-config-keymap for defining your own keymap
-    keymap = { preset = 'enter' },
+    keymap = {
+      preset = 'super-tab',
+      ['<Up>'] = { 'select_prev', 'fallback' },
+      ['<C-k>'] = { 'select_prev', 'fallback' },
+      ['<Down>'] = { 'select_next', 'fallback' },
+      ['<C-j>'] = { 'select_next', 'fallback' },
+    },
+    signature = { enabled = true },
     snippets = { preset = 'luasnip' },
     appearance = {
       -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
@@ -50,7 +57,41 @@ return {
     },
 
     -- (Default) Only show the documentation popup when manually triggered
-    completion = { accept = { auto_brackets = { enabled = false } }, documentation = { auto_show = true, auto_show_delay_ms = 1000 } },
+    completion = {
+      accept = { auto_brackets = { enabled = false } },
+      documentation = {
+        auto_show = true,
+        auto_show_delay_ms = 1000,
+        -- Whether to use treesitter highlighting, disable if you run into performance issues
+        treesitter_highlighting = true,
+      },
+      ghost_text = {
+        enabled = true,
+        -- Show the ghost text when an item has been selected
+        show_with_selection = true,
+        -- Show the ghost text when the menu is open
+        show_with_menu = true,
+      },
+      list = {
+        selection = {
+          -- When `true`, will automatically select the first item in the completion list
+          preselect = true,
+        },
+        cycle = {
+          -- When `true`, calling `select_next` at the _bottom_ of the completion list
+          -- will select the _first_ completion item.
+          from_bottom = false,
+          -- When `true`, calling `select_prev` at the _top_ of the completion list
+          -- will select the _last_ completion item.
+          from_top = false,
+        },
+      },
+      trigger = {
+        prefetch_on_insert = true,
+        -- When true, will show the completion window after typing any of alphanumerics, `-` or `_`
+        show_on_keyword = true,
+      },
+    },
 
     -- Default list of enabled providers defined so that you can extend it
     -- elsewhere in your config, without redefining it, due to `opts_extend`

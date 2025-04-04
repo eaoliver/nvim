@@ -1,3 +1,5 @@
+-- Tab management.
+-- We should also check out https://github.com/romgrk/barbar.nvim
 return {
   'akinsho/bufferline.nvim',
   version = '*',

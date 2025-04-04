@@ -169,8 +169,10 @@ require('lazy').setup({
       -- Useful status updates for LSP.
       { 'j-hui/fidget.nvim', opts = {} },
 
-      -- Allows extra capabilities provided by nvim-cmp
-      'hrsh7th/cmp-nvim-lsp',
+      -- Allows extra capabilities provided by nvim-cmp.
+      -- Commenting out vmp-nvim in favour of blink
+      -- 'hrsh7th/cmp-nvim-lsp',
+      'saghen/blink.cmp',
     },
     config = function()
       -- Brief aside: **What is LSP?**
@@ -340,7 +342,10 @@ require('lazy').setup({
       --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
       --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+
+      -- capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+
+      capabilities = vim.tbl_deep_extend('force', capabilities, require('blink.cmp').get_lsp_capabilities({}, false))
 
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -422,265 +427,29 @@ require('lazy').setup({
     end,
   },
 
-  { -- Autoformat
-    'stevearc/conform.nvim',
-    event = { 'BufWritePre' },
-    cmd = { 'ConformInfo' },
-    keys = {
-      {
-        '<leader>f',
-        function()
-          require('conform').format { async = true, lsp_format = 'fallback' }
-        end,
-        mode = '',
-        desc = '[f]ormat buffer',
-      },
-    },
-    opts = {
-      notify_on_error = false,
-      format_on_save = function(bufnr)
-        -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
-        local lsp_format_opt
-        if disable_filetypes[vim.bo[bufnr].filetype] then
-          lsp_format_opt = 'never'
-        else
-          lsp_format_opt = 'fallback'
-        end
-        return {
-          async = false, -- true will ignore timeout
-          timeout_ms = 2500, -- Increased from 500ms
-          lsp_format = lsp_format_opt,
-        }
-      end,
-      formatters_by_ft = {
-        lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use 'stop_after_first' to run the first available formatter from the list
-        css = { 'prettier' },
-        go = { 'gofmt' },
-        graphql = { 'prettier' },
-        html = { 'prettier' },
-        javascript = { 'prettier' },
-        javascriptreact = { 'prettier' },
-        json = { 'prettier' },
-        markdown = { 'prettier' },
-        -- typescript = { 'prettier', append_args = { '--no-bracket-spacing' } },
-        -- typescriptreact = { 'prettier', append_args = { '--no-bracket-spacing' } },
-        typescript = { 'prettier' },
-        typescriptreact = { 'prettier' },
-        yaml = { 'prettier' },
-      },
-    },
-  },
+  -- Auto-formatting
+  require 'plugins/format',
 
-  { -- Autocompletion
-    'hrsh7th/nvim-cmp',
-    event = 'InsertEnter',
-    dependencies = {
-      -- Snippet Engine & its associated nvim-cmp source
-      {
-        'L3MON4D3/LuaSnip',
-        build = (function()
-          -- Build Step is needed for regex support in snippets.
-          -- This step is not supported in many windows environments.
-          -- Remove the below condition to re-enable on windows.
-          if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
-            return
-          end
-          return 'make install_jsregexp'
-        end)(),
-        dependencies = {
-          -- `friendly-snippets` contains a variety of premade snippets.
-          --    See the README about individual language/framework/plugin snippets:
-          --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
-        },
-      },
-      'saadparwaiz1/cmp_luasnip',
-
-      -- Adds other completion capabilities.
-      --  nvim-cmp does not ship with all sources by default. They are split
-      --  into multiple repos for maintenance purposes.
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-nvim-lsp-signature-help',
-
-      -- auto complete from open buffers
-      'hrsh7th/cmp-buffer',
-    },
-    config = function()
-      -- See `:help cmp`
-      local cmp = require 'cmp'
-      local luasnip = require 'luasnip'
-      luasnip.config.setup {}
-
-      cmp.setup {
-        enabled = function()
-          -- Get the syntax group under the cursor
-          local context = require 'cmp.config.context'
-          if context.in_treesitter_capture 'comment' or context.in_syntax_group 'Comment' then
-            return false -- Disable completion inside comments
-          end
-
-          -- Disable in Telescope prompt buffers
-          local buftype = vim.api.nvim_get_option_value('buftype', { buf = 0 })
-          if buftype == 'prompt' then
-            return false
-          end
-
-          return true
-        end,
-        snippet = {
-          expand = function(args)
-            luasnip.lsp_expand(args.body)
-          end,
-        },
-        completion = { completeopt = 'menu,menuone,noinsert' },
-
-        -- For an understanding of why these mappings were
-        -- chosen, you will need to read `:help ins-completion`
-        --
-        -- No, but seriously. Please read `:help ins-completion`, it is really good!
-        mapping = cmp.mapping.preset.insert {
-          -- Scroll the documentation window [b]ack / [f]orward
-          -- ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-          -- ['<C-f>'] = cmp.mapping.scroll_docs(4),
-
-          --  This will auto-import if your LSP supports it.
-          --  This will expand snippets if the LSP sent a snippet.
-          ['<Tab>'] = cmp.mapping.confirm { select = true },
-          ['<CR>'] = cmp.mapping.confirm { select = true },
-          -- Select the [n]ext item
-          ['<C-j>'] = cmp.mapping.select_next_item(),
-          -- Select the [p]revious item
-          ['<C-k>'] = cmp.mapping.select_prev_item(),
-
-          -- Manually trigger a completion from nvim-cmp.
-          --  Generally you don't need this, because nvim-cmp will display
-          --  completions whenever it has completion options available.
-          ['<C-Space>'] = cmp.mapping.complete {},
-
-          -- Think of <c-l> as moving to the right of your snippet expansion.
-          --  So if you have a snippet that's like:
-          --  function $name($args)
-          --    $body
-          --  end
-          --
-          -- <c-l> will move you to the right of each of the expansion locations.
-          -- <c-h> is similar, except moving you backwards.
-          ['<C-l>'] = cmp.mapping(function()
-            if luasnip.expand_or_locally_jumpable() then
-              luasnip.expand_or_jump()
-            end
-          end, { 'i', 's' }),
-          ['<C-h>'] = cmp.mapping(function()
-            if luasnip.locally_jumpable(-1) then
-              luasnip.jump(-1)
-            end
-          end, { 'i', 's' }),
-
-          -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
-          --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
-        },
-        sources = {
-          {
-            name = 'lazydev',
-            -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
-            group_index = 0,
-          },
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' },
-          { name = 'path' },
-          { name = 'nvim_lsp_signature_help' },
-          {
-            -- auto complete from open buffers
-            name = 'buffer',
-            option = {
-              get_bufnrs = function()
-                return vim.api.nvim_list_bufs()
-              end,
-            },
-          },
-        },
-      }
-    end,
-  },
+  -- Import nvim-cmp
+  --require 'plugins/nvim-cmp',
+  require 'plugins/blink-cmp',
 
   -- Nice command line window
-  {
-    'folke/noice.nvim',
-    event = 'VeryLazy',
-    opts = {
-      -- add any options here
-      lsp = {
-        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-        override = {
-          ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-          ['vim.lsp.util.stylize_markdown'] = true,
-          ['cmp.entry.get_documentation'] = true, -- requires hrsh7th/nvim-cmp
-        },
-        progress = {
-          enabled = false,
-        },
-        signature = {
-          enabled = false,
-          auto_open = {
-            enabled = true,
-            trigger = true, -- Automatically show signature help when typing a trigger character from the LSP
-            luasnip = true, -- Will open signature help when jumping to Luasnip insert nodes
-            throttle = 50, -- Debounce lsp signature help request by 50ms
-          },
-        },
-      },
-      messages = {
-        view_search = false, -- 'virtualtext', -- view for search count messages. Set to `false` to disable
-      },
-      -- you can enable a preset for easier configuration
-      presets = {
-        bottom_search = false, -- use a classic bottom cmdline for search
-        command_palette = false, -- position the cmdline and popupmenu together
-        long_message_to_split = true, -- long messages will be sent to a split
-        inc_rename = false, -- enables an input dialog for inc-rename.nvim
-        lsp_doc_border = false, -- add a border to hover docs and signature help
-      },
-    },
-    dependencies = {
-      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-      'MunifTanjim/nui.nvim',
-      -- OPTIONAL:
-      --   `nvim-notify` is only needed, if you want to use the notification view.
-      --   If not available, we use `mini` as the fallback
-      -- 'rcarriga/nvim-notify',
-    },
-  },
+  require 'plugins/noice',
 
   -- Source in the themes.
   require 'plugins.themes',
 
   -- Highlight todo, notes, etc in comments
-  {
-    'folke/todo-comments.nvim',
-    event = 'VimEnter',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    opts = { signs = false },
-  },
+  require 'plugins/todo-comments',
 
+  -- Plugins to handle the bottom bar
   require 'plugins.lualine',
 
   -- Lots of useful little utilizes
   require 'plugins.mini',
 
-  -- Bufferline management
+  -- Bufferline management. We should also check out barber.nvim
   require 'plugins.bufferline',
 
   -- Highlight, edit, and navigate code

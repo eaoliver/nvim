@@ -351,25 +351,26 @@ require('lazy').setup({
   require 'plugins/noice',
 
   -- Source in the themes.
-  require 'plugins.themes',
+  require 'plugins/themes',
 
   -- Highlight todo, notes, etc in comments
   require 'plugins/todo-comments',
 
   -- Plugins to handle the bottom bar
-  require 'plugins.lualine',
+  require 'plugins/lualine',
 
   -- Lots of useful little utilizes
-  require 'plugins.mini',
+  require 'plugins/mini',
 
-  -- Bufferline management. We should also check out barber.nvim
-  require 'plugins.bufferline',
+  -- Tabline/Bufferline management.
+  require 'plugins/bufferline',
+  --require 'plugins/barbar',
 
   -- Highlight, edit, and navigate code
-  require 'plugins.treesitter',
+  require 'plugins/treesitter',
 
   -- Plugin to colourize color codes like #FF00FF
-  require 'plugins.colorizer',
+  require 'plugins/colorizer',
 
   -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
   --
@@ -378,19 +379,19 @@ require('lazy').setup({
   --
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
-  require 'plugins.lint',
+  require 'plugins/lint',
 
   -- Auto generate pairs of brackets when entering an opening bracket
-  require 'plugins.autopairs',
+  require 'plugins/autopairs',
 
   -- File tree
-  require 'plugins.neo-tree',
+  require 'plugins/neo-tree',
 
   -- adds gitsigns recommend keymaps
-  require 'plugins.gitsigns',
+  require 'plugins/gitsigns',
 
   -- pull in the tailwind configs
-  require 'plugins.tailwind',
+  require 'plugins/tailwind',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.

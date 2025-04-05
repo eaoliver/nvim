@@ -19,6 +19,8 @@ return {
         luasnip.config.setup {}
       end,
     },
+    'folke/lazydev.nvim',
+    'moyiz/blink-emoji.nvim',
   },
   -- use a release tag to download pre-built binaries
   version = '1.*',
@@ -41,9 +43,17 @@ return {
     -- C-k: Toggle signature help (if signature.enabled = true)
     --
     -- See :h blink-cmp-config-keymap for defining your own keymap
-    cmdline = { completion = { ghost_text = { enabled = true } } },
+    cmdline = { completion = { ghost_text = { enabled = true } }, keymap = { preset = 'none' } },
     keymap = {
       preset = 'super-tab',
+      -- ['<Tab>'] = {
+      --   function(cmp)
+      --     if cmp.is_ghost_text_visible() and not cmp.is_menu_visible() then
+      --       return cmp.accept()
+      --     end
+      --   end,
+      --   'select_and_accept',
+      -- },
       ['<Enter>'] = { 'select_and_accept', 'fallback' },
       ['<Up>'] = { 'select_prev', 'fallback' },
       ['<C-k>'] = { 'select_prev', 'fallback' },
@@ -102,8 +112,22 @@ return {
     -- Default list of enabled providers defined so that you can extend it
     -- elsewhere in your config, without redefining it, due to `opts_extend`
     sources = {
-      default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+      default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer', 'emoji' },
       providers = {
+        emoji = {
+          module = 'blink-emoji',
+          name = 'Emoji',
+          score_offset = 15, -- Tune by preference
+          opts = { insert = true }, -- Insert emoji (default) or complete its name
+          should_show_items = function()
+            return vim.tbl_contains(
+              -- Enable emoji completion only for git commits and markdown.
+              -- By default, enabled for all file-types.
+              { 'gitcommit', 'markdown' },
+              vim.o.filetype
+            )
+          end,
+        },
         lazydev = {
           name = 'LazyDev',
           module = 'lazydev.integrations.blink',

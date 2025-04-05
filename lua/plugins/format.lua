@@ -44,7 +44,7 @@ return { -- Autoformat
       javascript = { 'prettier' },
       javascriptreact = { 'prettier' },
       json = { 'prettier' },
-      markdown = { 'prettier' },
+      markdown = { 'markdownlint' },
       -- typescript = { 'prettier', append_args = { '--no-bracket-spacing' } },
       -- typescriptreact = { 'prettier', append_args = { '--no-bracket-spacing' } },
       typescript = { 'prettier' },

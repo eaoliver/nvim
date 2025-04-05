@@ -74,6 +74,13 @@ require('lazy').setup({
       -- Commenting out cmp-nvim in favour of blink
       -- 'hrsh7th/cmp-nvim-lsp',
       'saghen/blink.cmp',
+
+      -- Other interesting settings I found in https://github.com/dmtrKovalenko/my-nvim-config/blob/main/lua/plugins/lsp.lua
+      {
+        'pmizio/typescript-tools.nvim',
+        dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+        opts = {},
+      },
     },
     config = function()
       -- Brief aside: **What is LSP?**
@@ -259,6 +266,9 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         clangd = {},
+        eslint = {
+          filetypes = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact' },
+        },
         gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
@@ -303,6 +313,8 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'clangd',
+        'clang-format',
         'cssls',
         'delve', -- go debugger
         'gopls',

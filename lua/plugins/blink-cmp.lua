@@ -8,8 +8,8 @@ return {
         local luasnip = require 'luasnip'
 
         -- Loads all the snippets installed by extensions in vscode.
-        -- require('luasnip.loaders.from_vscode').lazy_load()
-        require('luasnip.loaders.from_vscode').load { paths = '~/.config/nvim/snippets' }
+        require('luasnip.loaders.from_vscode').lazy_load()
+        -- require('luasnip.loaders.from_vscode').load { paths = '~/.config/nvim/snippets' }
 
         luasnip.config.set_config {
           region_check_events = 'InsertEnter',
@@ -41,16 +41,21 @@ return {
     -- C-k: Toggle signature help (if signature.enabled = true)
     --
     -- See :h blink-cmp-config-keymap for defining your own keymap
+    cmdline = { completion = { ghost_text = { enabled = true } } },
     keymap = {
       preset = 'super-tab',
+      ['<Enter>'] = { 'select_and_accept', 'fallback' },
       ['<Up>'] = { 'select_prev', 'fallback' },
       ['<C-k>'] = { 'select_prev', 'fallback' },
+      ['<C-p>'] = { 'select_prev', 'fallback' },
       ['<Down>'] = { 'select_next', 'fallback' },
       ['<C-j>'] = { 'select_next', 'fallback' },
+      ['<C-n>'] = { 'select_next', 'fallback' },
     },
-    signature = { enabled = true },
+    signature = { enabled = true, window = { show_documentation = false } },
     snippets = { preset = 'luasnip' },
     appearance = {
+      use_nvim_cmp_as_default = true,
       -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
       -- Adjusts spacing to ensure icons are aligned
       nerd_font_variant = 'mono',
@@ -58,10 +63,10 @@ return {
 
     -- (Default) Only show the documentation popup when manually triggered
     completion = {
-      accept = { auto_brackets = { enabled = false } },
+      accept = { auto_brackets = { enabled = true } },
       documentation = {
         auto_show = true,
-        auto_show_delay_ms = 1000,
+        auto_show_delay_ms = 500,
         -- Whether to use treesitter highlighting, disable if you run into performance issues
         treesitter_highlighting = true,
       },
@@ -76,6 +81,7 @@ return {
         selection = {
           -- When `true`, will automatically select the first item in the completion list
           preselect = true,
+          auto_insert = true,
         },
         cycle = {
           -- When `true`, calling `select_next` at the _bottom_ of the completion list
@@ -96,7 +102,15 @@ return {
     -- Default list of enabled providers defined so that you can extend it
     -- elsewhere in your config, without redefining it, due to `opts_extend`
     sources = {
-      default = { 'lsp', 'path', 'snippets', 'buffer' },
+      default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+      providers = {
+        lazydev = {
+          name = 'LazyDev',
+          module = 'lazydev.integrations.blink',
+          -- make lazydev completions top priority (see `:h blink.cmp`)
+          score_offset = 100,
+        },
+      },
     },
 
     -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance

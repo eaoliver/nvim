@@ -24,7 +24,7 @@ return {
       },
     },
     messages = {
-      view_search = false, -- 'virtualtext', -- view for search count messages. Set to `false` to disable
+      view_search = 'virtualtext', -- 'virtualtext', -- view for search count messages. Set to `false` to disable
     },
     -- you can enable a preset for easier configuration
     presets = {

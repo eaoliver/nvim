@@ -59,15 +59,15 @@ local colors = {
         ['t'] = 'T',
       }
       local mode = vim.api.nvim_get_mode().mode
-      return vim.fn.winwidth(0) <= vim.o.columns / 2 and (abbrev_map[mode] or mode) or (mode_map[mode] or mode)
+      return vim.api.nvim_win_get_width(0) <= vim.o.columns / 2 and (abbrev_map[mode] or mode) or (mode_map[mode] or mode)
     end
 
     local conditions = {
       buffer_not_empty = function()
         return vim.fn.empty(vim.fn.expand '%:t') ~= 1
       end,
-      hide_in_width = function()
-        return vim.fn.winwidth(0) > 80
+      hide_in_split = function()
+        return vim.api.nvim_win_get_width(0) > vim.o.columns / 2
       end,
       check_git_workspace = function()
         local filepath = vim.fn.expand '%:p:h'
@@ -86,10 +86,10 @@ local colors = {
     local config = {
       options = {
         icons_enabled = true,
-        theme = 'onedark',
+        -- theme = 'onedark',
         -- Disable sections and component separators
-        component_separators = '',
-        section_separators = '',
+        component_separators = '>',
+        section_separators = '|',
         -- theme = {
         --   -- We are going to use lualine_c an lualine_x as left and
         --   -- right section. Both are highlighted by c theme .  So we
@@ -112,7 +112,7 @@ local colors = {
               modified = { fg = colors.orange },
               removed = { fg = colors.red },
             },
-            cond = conditions.hide_in_width,
+            cond = conditions.hide_in_split,
           },
           'diagnostics',
         },
@@ -124,17 +124,17 @@ local colors = {
           {
             'o:encoding', -- option component same as &encoding in viml
             color = { gui = 'bold' },
-            cond = conditions.hide_in_width,
+            cond = conditions.hide_in_split,
             fmt = string.upper, -- I'm not sure why it's upper case either ;)
           },
           {
             'fileformat',
             color = { gui = 'bold' },
-            cond = conditions.hide_in_width,
+            cond = conditions.hide_in_split,
             fmt = string.upper,
             icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
           },
-          { 'filetype', cond = conditions.hide_in_width },
+          { 'filetype', cond = conditions.hide_in_split },
         },
         lualine_y = { 'progress' },
         lualine_z = { 'location' },
@@ -143,10 +143,28 @@ local colors = {
         -- these are to remove the defaults
         lualine_a = {},
         lualine_b = {},
-        lualine_y = {},
-        lualine_z = {},
-        lualine_c = {},
-        lualine_x = {},
+        lualine_c = {
+          dynamic_filename,
+        },
+        lualine_x = {
+          'filesize',
+          {
+            'o:encoding', -- option component same as &encoding in viml
+            color = { gui = 'bold' },
+            cond = conditions.hide_in_split,
+            fmt = string.upper, -- I'm not sure why it's upper case either ;)
+          },
+          {
+            'fileformat',
+            color = { gui = 'bold' },
+            cond = conditions.hide_in_split,
+            fmt = string.upper,
+            icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
+          },
+          { 'filetype', cond = conditions.hide_in_split },
+        },
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' },
       },
       extensions = { 'neo-tree', 'quickfix' },
     }

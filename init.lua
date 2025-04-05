@@ -91,8 +91,8 @@ require 'lazyloader'
 -- vim.cmd.colorscheme 'torte' -- previous mvim theme
 -- vim.cmd.colorscheme 'catppuccin-mocha'
 -- vim.cmd.colorscheme 'tokyonight-night'
---vim.cmd.colorscheme 'carbonfox'
-vim.cmd.colorscheme 'arctic'
+vim.cmd.colorscheme 'carbonfox'
+-- vim.cmd.colorscheme 'arctic'
 vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'none' })
 
 if vim.g.neovide then

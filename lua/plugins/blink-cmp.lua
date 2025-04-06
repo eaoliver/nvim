@@ -43,7 +43,20 @@ return {
     -- C-k: Toggle signature help (if signature.enabled = true)
     --
     -- See :h blink-cmp-config-keymap for defining your own keymap
-    cmdline = { completion = { ghost_text = { enabled = true } }, keymap = { preset = 'none' } },
+    cmdline = {
+      completion = {
+        ghost_text = {
+          -- Ghost text looks good, but it's better to have a non-selection
+          -- than a ghost selection.
+          -- TODO: review
+          enabled = false,
+        },
+        menu = {
+          auto_show = true,
+        },
+      },
+      keymap = { preset = 'inherit', ['<Tab>'] = { 'show', 'accept' } },
+    },
     keymap = {
       preset = 'super-tab',
       -- ['<Tab>'] = {
@@ -54,7 +67,7 @@ return {
       --   end,
       --   'select_and_accept',
       -- },
-      ['<Enter>'] = { 'select_and_accept', 'fallback' },
+      -- ['<Enter>'] = { 'select_and_accept', 'fallback' },
       ['<Up>'] = { 'select_prev', 'fallback' },
       ['<C-k>'] = { 'select_prev', 'fallback' },
       ['<C-p>'] = { 'select_prev', 'fallback' },

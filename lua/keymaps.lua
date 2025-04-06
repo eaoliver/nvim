@@ -6,7 +6,40 @@
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [q]uickfix list' })
+vim.keymap.set('n', '<leader>l', vim.diagnostic.setloclist, { desc = 'Send diagnostic to [l]ocation list' })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setqflist, { desc = 'Send diagnostic to [q]quickfix list' })
+
+-- Location keymaps
+vim.keymap.set('n', ';l', function()
+  local loclist = vim.fn.getloclist(0, { size = 0 })
+  if loclist.size == 0 then
+    vim.notify('Location list is empty', vim.log.levels.INFO)
+    return
+  end
+
+  if require('utils').is_list_open 'location' then
+    vim.cmd 'lclose'
+  else
+    vim.cmd 'lopen'
+  end
+end, { desc = 'Toggle [l]ocation list visibility.' })
+-- Thse are handled by ]l and [l respectively
+-- vim.keymap.set('n', 'ln', '<cmd>lnext<CR>', { desc = 'Select [l]ocation list [n]ext item' })
+-- vim.keymap.set('n', 'lp', '<cmd>lprevious<CR>', { desc = 'Select [l]ocation list [p]revious item' })
+
+-- Quickfix keymaps
+vim.keymap.set('n', ';q', function()
+  if require('utils').is_list_open 'quickfix' then
+    vim.cmd 'cclose'
+  else
+    vim.cmd 'botright copen'
+    vim.cmd 'wincmd J'
+    vim.cmd 'resize 10'
+  end
+end, { desc = 'Toggle [q]uickfist list visibility' })
+-- These command are handled by ]q and [q respectively.]
+-- vim.keymap.set('n', 'qn', '<cmd>cnext<CR>', { desc = 'Select [q]uicklist list [n]ext item' })
+-- vim.keymap.set('n', 'qp', '<cmd>cprevious<CR>', { desc = 'Select [q]uicklist list [p]revious item' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which

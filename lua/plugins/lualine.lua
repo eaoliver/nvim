@@ -118,6 +118,16 @@ local colors = {
         },
         lualine_c = {
           dynamic_filename,
+          -- {
+          --   'buffers',
+          --   show_modified_status = true,
+          --   symbols = {
+          --     modified = ' ●', -- Text to show when the buffer is modified
+          --     alternate_file = '#', -- Text to show to identify the alternate file
+          --     directory = '', -- Text to show when the buffer is a directory
+          --   },
+          --   use_mode_colors = true,
+          -- },
         },
         lualine_x = {
           'filesize',
@@ -142,7 +152,21 @@ local colors = {
       inactive_sections = {
         -- these are to remove the defaults
         lualine_a = {},
-        lualine_b = {},
+        lualine_b = {
+          { 'branch', color = { gui = 'bold' } },
+          {
+            'diff',
+            -- Is it me or the symbol for modified us really weird
+            symbols = { added = ' ', modified = '󰝤 ', removed = ' ' },
+            diff_color = {
+              added = { fg = colors.green },
+              modified = { fg = colors.orange },
+              removed = { fg = colors.red },
+            },
+            cond = conditions.hide_in_split,
+          },
+          'diagnostics',
+        },
         lualine_c = {
           dynamic_filename,
         },

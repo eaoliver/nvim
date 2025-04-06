@@ -211,7 +211,7 @@ return {
             --}
             ['m'] = 'move', -- takes text input for destination, also accepts the optional config.show_path option like "add".
             ['q'] = 'close_window',
-            ['<leader>e'] = 'close_window',
+            -- ['<leader>e'] = 'close_window',
             ['R'] = 'refresh',
             ['?'] = 'show_help',
             ['<'] = 'prev_source',
@@ -367,14 +367,7 @@ return {
         },
       }
 
-      vim.keymap.set('n', '<leader>e', '<Cmd>Neotree toggle<CR>')
-      -- vim.keymap.set('n', '<leader>e', function()
-      --   if vim.bo.filetype == 'neo-tree' then
-      --     vim.cmd 'wincmd p'
-      --   else
-      --     vim.cmd 'Neotree toggle'
-      --   end
-      -- end, { silent = true, noremap = true, desc = 'Toggle Neo-tree or switch back' })
+      vim.keymap.set('n', ';e', '<Cmd>Neotree toggle<CR>', { desc = 'Toggle file [e]xplorer' })
     end,
   },
 }

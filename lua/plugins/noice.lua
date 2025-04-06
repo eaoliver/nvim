@@ -8,7 +8,7 @@ return {
       override = {
         ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
         ['vim.lsp.util.stylize_markdown'] = true,
-        ['cmp.entry.get_documentation'] = true, -- requires hrsh7th/nvim-cmp
+        -- ['cmp.entry.get_documentation'] = true, -- requires hrsh7th/nvim-cmp
       },
       progress = {
         enabled = false,
@@ -24,7 +24,7 @@ return {
       },
     },
     messages = {
-      view_search = 'virtualtext', -- 'virtualtext', -- view for search count messages. Set to `false` to disable
+      view_search = false, -- 'virtualtext', -- view for search count messages. Set to `false` to disable
     },
     -- you can enable a preset for easier configuration
     presets = {

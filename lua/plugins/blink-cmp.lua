@@ -1,3 +1,12 @@
+local allowAutoComplete = function()
+  local success, node = pcall(vim.treesitter.get_node)
+  if success and node and vim.tbl_contains({ 'comment', 'line_comment', 'block_comment' }, node:type()) then
+    return false
+  else
+    return true
+  end
+end
+
 return {
   'saghen/blink.cmp',
   dependencies = {
@@ -117,7 +126,8 @@ return {
       },
       trigger = {
         prefetch_on_insert = true,
-        -- When true, will show the completion window after typing any of alphanumerics, `-` or `_`
+        -- When true, will show the completion window after typing any of
+        -- alphanumerics, `-` or `_`
         show_on_keyword = true,
       },
     },
@@ -126,6 +136,14 @@ return {
     -- elsewhere in your config, without redefining it, due to `opts_extend`
     sources = {
       default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer', 'emoji' },
+      -- default = function()
+      --   local success, node = pcall(vim.treesitter.get_node)
+      --   if success and node and vim.tbl_contains({ 'comment', 'line_comment', 'block_comment' }, node:type()) then
+      --     return { 'lsp' }
+      --   else
+      --     return { 'lsp', 'path', 'snippets', 'buffer' }
+      --   end
+      -- end,
       providers = {
         emoji = {
           module = 'blink-emoji',
@@ -147,6 +165,9 @@ return {
           -- make lazydev completions top priority (see `:h blink.cmp`)
           score_offset = 100,
         },
+        -- lsp = {
+        --   enabled = allowAutoComplete,
+        -- },
       },
     },
 

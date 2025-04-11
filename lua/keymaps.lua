@@ -116,6 +116,17 @@ vim.keymap.set('n', '<D-w>', function()
   end
 end, { noremap = true, silent = true })
 
+-- Biuffers
+-- Close all open buffers that are not attached to windows.
+vim.keymap.set('n', '<leader>bd', function()
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.fn.bufwinnr(buf) == -1 then
+      vim.api.nvim_buf_delete(buf, {})
+    end
+    print 'Buffers closed'
+  end
+end, { noremap = true, silent = true, desc = '[b]uffer [d]elete all buffers not attached to a window' })
+
 --
 -- Setup cut and paste support in neovide and neovim
 --

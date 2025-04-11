@@ -108,11 +108,13 @@ return {
 
           -- Rename the variable under your cursor.
           --  Most Language Servers support renaming across files, etc.
-          map('<leader>rn', vim.lsp.buf.rename, '[r]e[n]ame')
+          -- This has been replaced with grn in nvim-0.11
+          -- map('<leader>rn', vim.lsp.buf.rename, '[r]e[n]ame')
 
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
-          map('<leader>ca', vim.lsp.buf.code_action, '[c]ode [a]ction', { 'n', 'x' })
+          -- Replaced with gra in nvim-0.11
+          -- map('<leader>ca', vim.lsp.buf.code_action, '[c]ode [a]ction', { 'n', 'x' })
 
           -- This function resolves a difference between neovim nightly (version 0.11) and stable (version 0.10)
           ---@param client vim.lsp.Client
@@ -271,6 +273,7 @@ return {
         'delve', -- go debugger
         'gopls',
         'html',
+        'postgrestools',
         'tailwindcss',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }

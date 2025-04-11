@@ -9,9 +9,15 @@ return {
     config = function()
       ---@diagnostic disable-next-line: missing-fields
       require('tokyonight').setup {
+        style = 'moon',
         styles = {
           comments = { italic = false }, -- Disable italics in comments
         },
+        lualine_bold = true,
+        on_colors = function(colors)
+          -- Changing this background affects all the styles.
+          colors.bg = '#000000'
+        end,
       }
 
       -- Load the colorscheme here.
@@ -72,8 +78,18 @@ return {
     priority = 1000,
     config = function() end,
   },
-  {
-    'rebelot/kanagawa.nvim',
-    priority = 1000,
-  },
+  -- {
+  --   'rebelot/kanagawa.nvim',
+  --   priority = 1000,
+  -- },
+  -- {
+  --   'fynnfluegge/monet.nvim',
+  --   name = 'monet',
+  --   priority = 1000,
+  --   config = function()
+  --     require('monet').setup {
+  --       dark_mode = true,
+  --     }
+  --   end,
+  -- },
 }

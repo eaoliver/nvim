@@ -51,8 +51,8 @@ require('lazy').setup({
 
   -- Import nvim-cmp
   -- Toggle this to switch between nvim-cmp and blink-cmp
-  require 'plugins/nvim-cmp',
-  -- require 'plugins/blink-cmp',
+  -- require 'plugins/nvim-cmp',
+  require 'plugins/blink-cmp',
 
   -- Nice command line window
   require 'plugins/noice',

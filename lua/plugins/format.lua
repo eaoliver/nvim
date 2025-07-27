@@ -47,6 +47,7 @@ return { -- Autoformat
       markdown = { 'prettier' },
       -- typescript = { 'prettier', append_args = { '--no-bracket-spacing' } },
       -- typescriptreact = { 'prettier', append_args = { '--no-bracket-spacing' } },
+      tex = { 'tex-fmt' },
       typescript = { 'prettier' },
       typescriptreact = { 'prettier' },
       yaml = { 'prettier' },

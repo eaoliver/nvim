@@ -9,7 +9,12 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<leader>l', vim.diagnostic.setloclist, { desc = 'Send diagnostic to [l]ocation list' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setqflist, { desc = 'Send diagnostic to [q]uickfix list' })
 
--- Location keymaps
+-- Toggle tailwind color hints keymaps
+vim.keymap.set('n', ';c', function()
+  vim.cmd 'TailwindColorToggle'
+end, { desc = 'Toggle tailwind [c]olour hints.' })
+
+-- Toggle location list keymaps
 vim.keymap.set('n', ';l', function()
   local loclist = vim.fn.getloclist(0, { size = 0 })
   if loclist.size == 0 then
@@ -27,7 +32,7 @@ end, { desc = 'Toggle [l]ocation list visibility.' })
 -- vim.keymap.set('n', 'ln', '<cmd>lnext<CR>', { desc = 'Select [l]ocation list [n]ext item' })
 -- vim.keymap.set('n', 'lp', '<cmd>lprevious<CR>', { desc = 'Select [l]ocation list [p]revious item' })
 
--- Quickfix keymaps
+-- Toggle quickfix keymaps
 vim.keymap.set('n', ';q', function()
   if require('utils').is_list_open 'quickfix' then
     vim.cmd 'cclose'
@@ -69,6 +74,10 @@ vim.keymap.set('n', ';h', ':set hls! <CR>', { desc = 'Toggle [h]ighlighting' })
 vim.keymap.set('n', ';d', function()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { desc = 'Toggle [d]iagnostics' })
+
+-- vim.keymap.set('n', ';dd', function()
+--   vim.diagnostic.open_float()
+-- end, { desc = 'Toggles [d]iagnositcs display' })
 
 -- I don't like how neovim added character and line deletions into the register.
 -- This causes and standard copy and paste register to be overwritten, which

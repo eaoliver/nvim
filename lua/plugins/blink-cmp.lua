@@ -66,6 +66,9 @@ return {
       },
       keymap = { preset = 'inherit', ['<Tab>'] = { 'show', 'accept' } },
     },
+    enabled = function()
+      return not vim.tbl_contains({ 'tex' }, vim.bo.filetype)
+    end,
     keymap = {
       preset = 'super-tab',
       -- ['<Tab>'] = {
@@ -135,7 +138,8 @@ return {
     -- Default list of enabled providers defined so that you can extend it
     -- elsewhere in your config, without redefining it, due to `opts_extend`
     sources = {
-      default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer', 'emoji' },
+      -- default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer', 'emoji' },
+      default = { 'lazydev', 'lsp', 'snippets', 'emoji' },
       -- default = function()
       --   local success, node = pcall(vim.treesitter.get_node)
       --   if success and node and vim.tbl_contains({ 'comment', 'line_comment', 'block_comment' }, node:type()) then

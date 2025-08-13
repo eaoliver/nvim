@@ -1,4 +1,4 @@
-# kickstart.nvim
+# This is Earl Oliver's fork of kickstart.nvim
 
 ## Introduction
 
@@ -34,7 +34,7 @@ External Requirements:
   - If you want to write Golang, you will need `go`
   - etc.
 
-> **NOTE**
+> [!NOTE]
 > See [Install Recipes](#Install-Recipes) for additional Windows and Linux specific notes
 > and quick install snippets
 

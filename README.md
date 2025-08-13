@@ -40,7 +40,7 @@ External Requirements:
 
 ### Install Kickstart
 
-> **NOTE** > [Backup](#FAQ) your previous configuration (if any exists)
+> [!NOTE] > [Backup](#FAQ) your previous configuration (if any exists)
 
 Neovim's configurations are located under the following paths, depending on your OS:
 
@@ -56,9 +56,9 @@ Neovim's configurations are located under the following paths, depending on your
 so that you have your own copy that you can modify, then install by cloning the
 fork to your machine using one of the commands below, depending on your OS.
 
-> **NOTE**
+> [!NOTE]
 > Your fork's URL will be something like this:
-> `https://github.com/<your_github_username>/kickstart.nvim.git`
+> `https://github.com/<your_github_username>/nvim.git`
 
 You likely want to remove `lazy-lock.json` from your fork's `.gitignore` file
 too - it's ignored in the kickstart repo to make maintenance easier, but it's
@@ -66,7 +66,7 @@ too - it's ignored in the kickstart repo to make maintenance easier, but it's
 
 #### Clone kickstart.nvim
 
-> **NOTE**
+> [!NOTE]
 > If following the recommended step above (i.e., forking the repo), replace
 > `nvim-lua` with `<your_github_username>` in the commands below
 
